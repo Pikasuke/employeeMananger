@@ -2,7 +2,6 @@ package com.moi.employeManager.Controllers;
 
 import com.moi.employeManager.Entities.Employee;
 import com.moi.employeManager.Service.EmployeService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +25,18 @@ public class EmployeControllers {
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/employe")
     public Employee addEmploye (@RequestBody Employee employee) {
         return employeService.addEmploye(employee);
+    }
+
+    @DeleteMapping(path = "{employeId}")
+    public void deleteEmploye (@PathVariable("employeId") Long employeId) {
+        employeService.deleteEmployee(employeId);
+    }
+
+    @PutMapping("/employe")
+    public Employee updateEmploye (@RequestBody Employee employee) {
+       return employeService.updateEmploye(employee);
     }
 }
