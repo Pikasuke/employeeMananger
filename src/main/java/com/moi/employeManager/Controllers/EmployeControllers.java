@@ -1,7 +1,8 @@
 package com.moi.employeManager.Controllers;
 
+import com.moi.employeManager.DTO.EmployeDTO;
 import com.moi.employeManager.Entities.Employee;
-import com.moi.employeManager.Service.EmployeService;
+import com.moi.employeManager.Service.EmployeServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,24 +11,25 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EmployeControllers {
 
-    private final EmployeService employeService;
+    private final EmployeServiceImpl employeService;
 
-    public EmployeControllers(EmployeService employeService) {
+    public EmployeControllers(EmployeServiceImpl employeService) {
         this.employeService = employeService;
     }
 
 
     @GetMapping("/employes")
-    public ResponseEntity<List<Employee>> getAllEmployes() {
-        List<Employee> employees = employeService.findAllEmployes();
-        return new ResponseEntity<>(employees, HttpStatus.OK);
+    public ResponseEntity<List<EmployeDTO>> getAllEmployes() {
+        List<EmployeDTO> employesDto = employeService.findAllEmployes();
+        return new ResponseEntity<>(employesDto, HttpStatus.OK);
     }
 
     @PostMapping("/employe")
-    public Employee addEmploye (@RequestBody Employee employee) {
-        return employeService.addEmploye(employee);
+    public EmployeDTO addEmploye (@RequestBody EmployeDTO employeDto) {
+        return employeService.addEmploye(employeDto);
     }
 
     @DeleteMapping(path = "{employeId}")
@@ -36,7 +38,7 @@ public class EmployeControllers {
     }
 
     @PutMapping("/employe")
-    public Employee updateEmploye (@RequestBody Employee employee) {
-       return employeService.updateEmploye(employee);
+    public EmployeDTO updateEmploye (@RequestBody EmployeDTO employeDto) {
+       return employeService.updateEmploye(employeDto);
     }
 }
